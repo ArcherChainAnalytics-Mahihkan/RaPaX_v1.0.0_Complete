@@ -1,0 +1,96 @@
+RaPaX™ Warranty and Liability Disclaimer
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+────────────────────────────────────────────────────────────
+1. NO WARRANTY
+────────────────────────────────────────────────────────────
+RaPaX™ is provided AS IS and AS AVAILABLE.
+
+Archer Chain Analytics™ makes no warranties — express,
+implied, or statutory — including but not limited to:
+
+- Fitness for a particular purpose
+- Merchantability
+- Non-infringement
+- Uninterrupted or error-free operation
+- Suitability for financial transaction processing
+- Accuracy of blockchain payment detection
+- Completeness or accuracy of audit records
+
+────────────────────────────────────────────────────────────
+2. OPERATIONAL RISK
+────────────────────────────────────────────────────────────
+RaPaX™ facilitates digital product transactions.
+You acknowledge:
+
+- You are solely responsible for the products you sell.
+- Blockchain payment confirmation times vary and are
+  beyond the control of Archer Chain Analytics™.
+- No guarantee is made that all transactions will
+  complete successfully.
+- Cryptocurrency values fluctuate and all risk of
+  exchange rate changes rests with you.
+
+────────────────────────────────────────────────────────────
+3. LIMITATION OF LIABILITY
+────────────────────────────────────────────────────────────
+To the fullest extent permitted by applicable law:
+
+Archer Chain Analytics™ is not liable for:
+
+- Direct, indirect, incidental, or consequential damages
+- Lost revenue or failed transactions
+- Cryptocurrency losses of any kind
+- Buyer disputes or chargebacks
+- Data loss or security breaches on your infrastructure
+- Legal costs arising from use or misuse of RaPaX™
+
+This limitation applies regardless of form of action,
+even if Archer Chain Analytics™ has been advised of
+the possibility of such damages.
+
+────────────────────────────────────────────────────────────
+4. USER RESPONSIBILITY
+────────────────────────────────────────────────────────────
+You are solely responsible for:
+
+- Lawful use of RaPaX™ and all transactions thereon
+- Security of your deployment infrastructure
+- Compliance with financial regulations in your jurisdiction
+- Backup and recovery of your database and audit logs
+- Your Buyers' experience and any disputes arising
+- Tax obligations on sales made through RaPaX™
+
+────────────────────────────────────────────────────────────
+5. NO FINANCIAL OR LEGAL CERTIFICATION
+────────────────────────────────────────────────────────────
+RaPaX™ is a digital product vending platform.
+
+RaPaX™ does not constitute:
+
+- A licensed payment processor or money services business
+- Financial advice or investment advice
+- Legal advice or compliance certification
+- A regulated financial product of any kind
+
+Engage qualified legal and financial counsel for
+determinations in those domains.
+
+────────────────────────────────────────────────────────────
+6. GOVERNING LAW
+────────────────────────────────────────────────────────────
+Governed by the laws of Saskatchewan and the federal
+laws of Canada applicable therein.
+
+────────────────────────────────────────────────────────────
+7. ACCEPTANCE
+────────────────────────────────────────────────────────────
+Use of RaPaX™ constitutes acceptance of this Disclaimer.
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────

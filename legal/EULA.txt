@@ -1,0 +1,340 @@
+RaPaX™ End-User License Agreement (EULA)
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+Effective upon installation or use of RaPaX™.
+This Agreement is a binding legal contract.
+
+────────────────────────────────────────────────────────────
+1. DEFINITIONS
+────────────────────────────────────────────────────────────
+"RaPaX™" means the RaPaX™ software, vending engine,
+  operator dashboard, payment pipeline, delivery engine,
+  scripts, documentation, and all associated files.
+
+"Archer Chain Analytics™" means Archer Chain Analytics™,
+  its principals, successors, and assigns.
+
+"You" or "Licensee" means the individual or entity that
+  has purchased, downloaded, or installed RaPaX™.
+
+"Operator" means the Licensee operating RaPaX™ to sell
+  digital products to end buyers.
+
+"Buyer" means an end purchaser of digital products
+  transacted through RaPaX™.
+
+"Transaction" means a completed or attempted purchase
+  of a digital product through the RaPaX™ platform.
+
+"Delivery Token" means the cryptographically generated,
+  time-limited download credential issued by RaPaX™
+  upon confirmed payment.
+
+"Audit Log" means the immutable, append-only record of
+  all payment, fingerprint, and delivery events generated
+  by RaPaX™.
+
+────────────────────────────────────────────────────────────
+2. GRANT OF LICENSE
+────────────────────────────────────────────────────────────
+Subject to the terms of this Agreement, Archer Chain
+Analytics™ grants you a limited, non-exclusive,
+non-transferable, non-sublicensable license to:
+
+- Install RaPaX™ on systems you own or control.
+- Operate RaPaX™ to sell your own digital products
+  to end buyers.
+- Generate Delivery Tokens, Audit Logs, and transaction
+  records for your internal operational use.
+
+This license does not convey ownership.
+No source code rights are granted under CREATOR or
+BUILDER tiers. Source code access under BUILDER tier
+grants a limited internal-use license only.
+No rights beyond those explicitly stated are granted.
+
+────────────────────────────────────────────────────────────
+3. TIER-SPECIFIC RIGHTS
+────────────────────────────────────────────────────────────
+CREATOR LICENSE ($997)
+- Single-operator deployment on systems you own.
+- Up to 25 active products in the catalog.
+- Standard upkeep included after license paid in full.
+- No source code access.
+- No white-label rights.
+- No client deployment rights.
+
+BUILDER LICENSE ($2,497)
+- Single-operator deployment on systems you own.
+- Unlimited active products.
+- Source code access for internal use only.
+- AcerbE™ API key included.
+- Priority upkeep included after license paid in full.
+- No white-label rights.
+- No client deployment rights.
+
+SOVEREIGN LICENSE ($4,997)
+- Deployment on up to three (3) systems you own or
+  operate for clients.
+- Unlimited active products.
+- Source code access for internal use only.
+- White-label rights for your own branded deployment.
+- AcerbE™ API key included.
+- Priority upkeep — dedicated lane.
+- No sublicensing or resale of RaPaX™ itself.
+
+────────────────────────────────────────────────────────────
+4. PROHIBITED USES
+────────────────────────────────────────────────────────────
+You may not:
+
+- Sell, sublicense, lease, rent, transfer, or distribute
+  RaPaX™ or any derivative work, in whole or in part,
+  except as explicitly permitted under SOVEREIGN tier.
+- Modify, adapt, decompile, disassemble, or reverse
+  engineer any portion of RaPaX™ not covered by your
+  source code license.
+- Extract, replicate, or reproduce the payment pipeline,
+  delivery engine, fingerprinting integration, or
+  audit-log architecture for use in competing products.
+- Remove, alter, or obscure any trademark, copyright
+  notice, fingerprint metadata, or integrity marker.
+- Use RaPaX™ to sell products you do not own or have
+  lawful rights to distribute.
+- Use RaPaX™ for any unlawful, deceptive, fraudulent,
+  or harmful purpose.
+- Operate RaPaX™ to process payments for prohibited
+  goods including but not limited to: weapons, controlled
+  substances, counterfeit goods, or illegal services.
+- Represent RaPaX™ audit records as court-admissible
+  forensic evidence without independent legal verification.
+- Use RaPaX™ as a managed service for third parties
+  without a SOVEREIGN license and written agreement.
+
+────────────────────────────────────────────────────────────
+5. PAYMENT PLAN OBLIGATIONS
+────────────────────────────────────────────────────────────
+If you purchase RaPaX™ under a payment plan:
+
+- 50% of the license fee is due at time of purchase.
+- The remaining 50% is due thirty (30) days from
+  the date of purchase.
+- Upkeep and repair services are not provided until
+  the license is paid in full.
+- Failure to remit the balance within thirty (30) days
+  constitutes a material breach of this Agreement.
+- Upon breach of payment terms, your license is
+  suspended within forty-eight (48) hours.
+- License reactivates upon full payment of the
+  outstanding balance.
+- No refunds are issued on the initial deposit in the
+  event of payment default.
+
+────────────────────────────────────────────────────────────
+6. UPKEEP AND REPAIR SERVICES
+────────────────────────────────────────────────────────────
+Upkeep is included at no additional charge for fully
+paid licenses.
+
+Upkeep covers:
+- Bug fixes and error resolution.
+- Blockchain provider API drift adjustments.
+- Dependency security patches.
+- Node.js LTS compatibility updates.
+- AcerbE™ integration adjustments for AcerbE™ API changes.
+
+Upkeep does not cover:
+- New feature development.
+- Custom integrations or third-party connections.
+- FIAT payment rail activation.
+- Server setup, hosting, or DevOps support.
+- Damage caused by unauthorized modification of RaPaX™.
+
+Archer Chain Analytics™ reserves the right to determine
+scope of upkeep coverage at its sole discretion.
+
+────────────────────────────────────────────────────────────
+7. INTELLECTUAL PROPERTY
+────────────────────────────────────────────────────────────
+RaPaX™ — including its vending engine, payment pipeline,
+delivery architecture, fingerprinting integration, audit
+system, operator dashboard, scripts, documentation, and
+all Outputs — is the exclusive intellectual property of
+Archer Chain Analytics™.
+
+Purchase grants a license only.
+No intellectual property rights are transferred.
+
+All trademarks — including RaPaX™, AcerbE™, and Archer
+Chain Analytics™ — are the exclusive property of Archer
+Chain Analytics™.
+
+────────────────────────────────────────────────────────────
+8. CRYPTOCURRENCY PAYMENTS
+────────────────────────────────────────────────────────────
+RaPaX™ facilitates cryptocurrency payments (BTC, ETH,
+SOL, USDT) between Operators and their Buyers.
+
+You acknowledge:
+
+- Cryptocurrency transactions are irreversible once
+  confirmed on-chain.
+- Archer Chain Analytics™ is not a payment processor,
+  financial institution, or money services business.
+- You are solely responsible for compliance with all
+  applicable financial regulations in your jurisdiction
+  governing cryptocurrency transactions.
+- Archer Chain Analytics™ is not liable for losses
+  arising from cryptocurrency market volatility, failed
+  transactions, or incorrect wallet addresses.
+- You are responsible for configuring and securing all
+  blockchain provider API credentials used with RaPaX™.
+
+────────────────────────────────────────────────────────────
+9. DATA HANDLING AND PRIVACY
+────────────────────────────────────────────────────────────
+RaPaX™ operates on your own infrastructure.
+
+Archer Chain Analytics™ does not:
+- Access, collect, or transmit your transaction data.
+- Maintain any cloud dependency or external database.
+- Monitor your operations or Buyers.
+
+You are solely responsible for:
+- Lawful collection and handling of Buyer data processed
+  through RaPaX™.
+- Compliance with applicable privacy legislation including
+  PIPEDA and the laws of your jurisdiction.
+- Security of the RaPaX™ database and all Audit Logs.
+- Maintaining your own privacy policy for your Buyers.
+
+────────────────────────────────────────────────────────────
+10. COMPLIANCE OBLIGATIONS
+────────────────────────────────────────────────────────────
+You agree to comply with all applicable laws and
+regulations governing your use of RaPaX™, including:
+
+- Privacy and data protection legislation.
+- Financial regulations governing cryptocurrency use.
+- Consumer protection regulations.
+- Intellectual property law.
+- Export control regulations.
+- Tax obligations in your jurisdiction.
+
+Archer Chain Analytics™ is not responsible for your
+compliance obligations.
+
+────────────────────────────────────────────────────────────
+11. AUDIT RIGHTS
+────────────────────────────────────────────────────────────
+Archer Chain Analytics™ reserves the right to audit your
+use of RaPaX™ for compliance with this Agreement upon
+reasonable written notice.
+
+────────────────────────────────────────────────────────────
+12. NO WARRANTY
+────────────────────────────────────────────────────────────
+RaPaX™ is provided AS IS.
+
+Archer Chain Analytics™ makes no warranties — express,
+implied, or statutory — including fitness for purpose,
+merchantability, uninterrupted operation, or suitability
+for financial transaction processing.
+
+────────────────────────────────────────────────────────────
+13. LIMITATION OF LIABILITY
+────────────────────────────────────────────────────────────
+To the fullest extent permitted by applicable law:
+
+Archer Chain Analytics™ is not liable for any direct,
+indirect, incidental, consequential, or special damages
+arising from use, misuse, or inability to use RaPaX™,
+including but not limited to lost revenue, failed
+transactions, or cryptocurrency losses.
+
+Total liability shall not exceed the amount paid for
+RaPaX™ in the twelve (12) months preceding the claim.
+
+────────────────────────────────────────────────────────────
+14. INDEMNIFICATION
+────────────────────────────────────────────────────────────
+You agree to indemnify and hold harmless Archer Chain
+Analytics™ from any claims, damages, losses, or costs
+(including legal fees) arising from:
+
+- Your use or misuse of RaPaX™.
+- Your breach of this Agreement.
+- Your violation of any applicable law or regulation.
+- Your Buyers' claims related to transactions processed
+  through your RaPaX™ deployment.
+- Your infringement of any third-party rights.
+
+────────────────────────────────────────────────────────────
+15. TERMINATION
+────────────────────────────────────────────────────────────
+This Agreement terminates immediately upon any breach.
+
+Upon termination:
+- All rights granted under this Agreement cease.
+- You must immediately cease all use of RaPaX™.
+- You must destroy all copies in your possession.
+
+Payment default provisions are governed by Section 5.
+Archer Chain Analytics™ reserves all legal remedies.
+
+────────────────────────────────────────────────────────────
+16. DISPUTE RESOLUTION
+────────────────────────────────────────────────────────────
+Step 1 — Written Notice:
+  The disputing party delivers written notice specifying
+  the dispute in detail.
+
+Step 2 — Good Faith Negotiation:
+  Parties attempt resolution within thirty (30) days.
+
+Step 3 — Arbitration:
+  Unresolved disputes shall be submitted to binding
+  arbitration in Saskatoon, Saskatchewan, under the
+  Arbitration Act (Saskatchewan).
+
+Step 4 — Litigation:
+  Disputes shall be resolved exclusively in the courts
+  of Saskatchewan.
+
+You waive any right to jury trial.
+You waive any right to class action proceedings.
+
+────────────────────────────────────────────────────────────
+17. GOVERNING LAW AND JURISDICTION
+────────────────────────────────────────────────────────────
+This Agreement is governed by the laws of the Province
+of Saskatchewan and the federal laws of Canada applicable
+therein, without regard to conflict of law principles.
+
+────────────────────────────────────────────────────────────
+18. SEVERABILITY
+────────────────────────────────────────────────────────────
+If any provision is found unenforceable, the remaining
+provisions continue in full force and effect.
+
+────────────────────────────────────────────────────────────
+19. ENTIRE AGREEMENT
+────────────────────────────────────────────────────────────
+This Agreement, together with LICENSE.txt,
+WARRANTY_DISCLAIMER.txt, and COMPLIANCE_DISCLOSURE.txt,
+constitutes the entire agreement between you and Archer
+Chain Analytics™ regarding RaPaX™.
+
+────────────────────────────────────────────────────────────
+20. ACCEPTANCE
+────────────────────────────────────────────────────────────
+Installation, access, or use of RaPaX™ constitutes your
+unconditional acceptance of this Agreement.
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────

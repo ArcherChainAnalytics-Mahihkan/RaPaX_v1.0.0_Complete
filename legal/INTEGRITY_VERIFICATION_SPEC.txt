@@ -1,0 +1,206 @@
+RaPaX™ Integrity Verification Specification
+Audit Log Schema, Delivery Token Format, and Verification Procedure
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+Document Type: Technical Specification | Version: 1.0
+
+────────────────────────────────────────────────────────────
+1. SCOPE
+────────────────────────────────────────────────────────────
+This specification defines the RaPaX™ audit log schema,
+delivery token format, database schema, and the
+verification procedure for establishing transaction
+provenance.
+
+It is the authoritative reference for integration,
+audit, and forensic use.
+
+────────────────────────────────────────────────────────────
+2. DELIVERY TOKEN FORMAT
+────────────────────────────────────────────────────────────
+Field:    Download Token
+Method:   crypto.randomBytes(48).toString('hex')
+Length:   96 hexadecimal characters
+Entropy:  384 bits
+Uniqueness: Guaranteed by CSPRNG — collision probability
+            negligible at operational scale.
+Expiry:   ISO 8601 UTC timestamp — configurable via
+          DOWNLOAD_LINK_TTL environment variable.
+          Default: 3600 seconds (1 hour).
+Exposure: Token is the only identifier in the download
+          URL. No file path is ever exposed.
+
+Download URL format:
+  https://[your-domain]/api/download/[96-char-token]
+
+────────────────────────────────────────────────────────────
+3. DATABASE SCHEMA
+────────────────────────────────────────────────────────────
+
+TABLE: products
+  product_id      TEXT  PRIMARY KEY (UUID)
+  name            TEXT  NOT NULL
+  description     TEXT
+  price_btc       REAL
+  price_eth       REAL
+  price_sol       REAL
+  price_usdt      REAL
+  price_fiat      REAL  (reserved — future)
+  file_path       TEXT  NOT NULL (never exposed via API)
+  version         TEXT  NOT NULL
+  availability    INTEGER (1=available, 0=unavailable)
+  created_at      TEXT  ISO 8601 UTC
+  updated_at      TEXT  ISO 8601 UTC
+
+TABLE: transactions
+  transaction_id    TEXT  PRIMARY KEY (UUID)
+  product_id        TEXT  REFERENCES products
+  buyer_wallet      TEXT  (buyer-supplied wallet address)
+  currency          TEXT  (BTC|ETH|SOL|USDT)
+  amount_expected   REAL
+  amount_received   REAL
+  tx_hash           TEXT  (blockchain transaction hash)
+  status            TEXT  (pending|confirming|confirmed|
+                           fingerprinting|delivering|
+                           complete|failed|expired)
+  confirmations     INTEGER
+  product_version   TEXT  (snapshot at time of sale)
+  created_at        TEXT  ISO 8601 UTC
+  updated_at        TEXT  ISO 8601 UTC
+
+TABLE: payment_addresses
+  address_id      TEXT  PRIMARY KEY (UUID)
+  transaction_id  TEXT  REFERENCES transactions
+  currency        TEXT
+  address         TEXT  UNIQUE (one per transaction)
+  expected_amount REAL
+  derivation_idx  INTEGER (for HD wallet derivation)
+  created_at      TEXT  ISO 8601 UTC
+  expires_at      TEXT  ISO 8601 UTC
+
+TABLE: fingerprints
+  fingerprint_id          TEXT  PRIMARY KEY (UUID)
+  transaction_id          TEXT  REFERENCES transactions
+  product_id              TEXT  REFERENCES products
+  buyer_wallet            TEXT
+  original_file_path      TEXT
+  fingerprinted_file_path TEXT
+  file_hash               TEXT  (SHA-256 of fingerprinted file)
+  acerbe_response_raw     TEXT  (full AcerbE™ JSON response)
+  created_at              TEXT  ISO 8601 UTC
+
+TABLE: deliveries
+  delivery_id     TEXT  PRIMARY KEY (UUID)
+  transaction_id  TEXT  REFERENCES transactions
+  product_id      TEXT  REFERENCES products
+  buyer_wallet    TEXT
+  fingerprint_id  TEXT  REFERENCES fingerprints
+  download_token  TEXT  UNIQUE (96-char hex)
+  download_link   TEXT  (full URL — never expose file path)
+  file_hash       TEXT  (SHA-256 of delivered file)
+  expires_at      TEXT  ISO 8601 UTC
+  downloaded_at   TEXT  ISO 8601 UTC (first download)
+  download_count  INTEGER
+  created_at      TEXT  ISO 8601 UTC
+
+TABLE: audit_log
+  log_id          TEXT  PRIMARY KEY (UUID)
+  event_type      TEXT  (PAYMENT|FINGERPRINT|DELIVERY|
+                         PRODUCT|SYSTEM)
+  transaction_id  TEXT
+  product_id      TEXT
+  fingerprint_id  TEXT
+  delivery_id     TEXT
+  actor           TEXT  (wallet address|operator|system)
+  payload         TEXT  (full event JSON — immutable)
+  created_at      TEXT  ISO 8601 UTC
+
+AUDIT LOG INVARIANT:
+  No DELETE or UPDATE statement is ever issued against
+  the audit_log table. The log is append-only by design.
+  Any modification to audit_log records is detectable
+  via external log export comparison.
+
+────────────────────────────────────────────────────────────
+4. AUDIT LOG EVENT TYPES
+────────────────────────────────────────────────────────────
+
+PAYMENT events:
+  PURCHASE_INITIATED  — Buyer initiated a purchase
+  PAYMENT_DETECTED    — On-chain payment detected by poller
+  PAYMENT_MANUALLY_CONFIRMED — Operator confirmed manually
+
+FINGERPRINT events:
+  FINGERPRINT_COMPLETE — AcerbE™ fingerprinting succeeded
+
+DELIVERY events:
+  DELIVERY_ISSUED     — Download token generated
+  ASSET_DOWNLOADED    — Buyer downloaded the asset
+
+PRODUCT events:
+  CREATE              — Product uploaded
+  UPDATE              — Product metadata updated
+  DELETE              — Product deactivated
+
+SYSTEM events:
+  PIPELINE_COMPLETE   — Full transaction pipeline succeeded
+  PIPELINE_FAILED     — Pipeline error occurred
+
+────────────────────────────────────────────────────────────
+5. TRANSACTION PROVENANCE VERIFICATION PROCEDURE
+────────────────────────────────────────────────────────────
+To verify a specific transaction:
+
+Step 1 — Retrieve transaction record:
+  SELECT * FROM transactions WHERE transaction_id = ?;
+
+Step 2 — Verify payment on-chain:
+  Cross-reference tx_hash against the relevant blockchain
+  explorer for the currency (BTC, ETH, SOL, USDT).
+
+Step 3 — Retrieve fingerprint record:
+  SELECT * FROM fingerprints WHERE transaction_id = ?;
+
+Step 4 — Verify file hash:
+  Compute SHA-256 of the fingerprinted file at
+  fingerprinted_file_path and compare to file_hash.
+
+Step 5 — Retrieve delivery record:
+  SELECT * FROM deliveries WHERE transaction_id = ?;
+
+Step 6 — Cross-reference audit log:
+  SELECT * FROM audit_log WHERE transaction_id = ?
+  ORDER BY created_at ASC;
+  Verify all expected events are present in sequence.
+
+Step 7 — Verify buyer identity:
+  Cross-reference buyer_wallet in transactions and
+  fingerprints with the AcerbE™ fingerprint payload
+  (if AcerbE™ was used).
+
+────────────────────────────────────────────────────────────
+6. EXPORT FORMATS
+────────────────────────────────────────────────────────────
+Audit Log — JSON:
+  GET /api/operator/export/json
+  Returns: JSON array of all audit_log records.
+  Use for: Programmatic verification, archival.
+
+Audit Log — CSV:
+  GET /api/operator/export/csv
+  Returns: CSV with all audit_log fields.
+  Use for: Spreadsheet analysis, compliance review.
+
+Delivery Log — JSON:
+  GET /api/operator/export/deliveries
+  Returns: JSON array of all delivery records with
+           fingerprint and file hash cross-reference.
+  Use for: Dispute resolution, forensic review.
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────

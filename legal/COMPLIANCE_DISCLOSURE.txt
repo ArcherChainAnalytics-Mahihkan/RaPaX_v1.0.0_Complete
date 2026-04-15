@@ -1,0 +1,148 @@
+RaPaX™ Compliance Disclosure
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+────────────────────────────────────────────────────────────
+1. PURPOSE
+────────────────────────────────────────────────────────────
+This disclosure defines what RaPaX™ is, what it does,
+and what it does not do.
+
+It is provided to protect buyers, operators, and Archer
+Chain Analytics™ from false claims, misrepresentation,
+and misuse.
+
+────────────────────────────────────────────────────────────
+2. OPERATIONAL SCOPE
+────────────────────────────────────────────────────────────
+RaPaX™ is a self-hosted, sovereign digital product
+vending platform.
+
+RaPaX™ operates entirely on your own infrastructure.
+RaPaX™ does not connect to Archer Chain Analytics™ servers.
+RaPaX™ does not require any external platform account.
+RaPaX™ does not collect, transmit, or store any data
+externally.
+
+────────────────────────────────────────────────────────────
+3. PAYMENT PROCESSING
+────────────────────────────────────────────────────────────
+RaPaX™ facilitates cryptocurrency payments by:
+
+- Generating unique payment addresses per transaction.
+- Monitoring the blockchain for payment confirmation
+  via your configured provider APIs (BlockCypher,
+  Infura, Alchemy, Helius, or your own nodes).
+- Triggering the delivery pipeline upon confirmed payment.
+
+RaPaX™ does NOT:
+
+- Hold, custody, or transmit cryptocurrency funds.
+- Act as a payment processor, money transmitter,
+  or financial intermediary.
+- Guarantee transaction confirmation times.
+- Guarantee pricing stability of any cryptocurrency.
+
+You are solely responsible for regulatory compliance
+in your jurisdiction regarding cryptocurrency receipts.
+
+────────────────────────────────────────────────────────────
+4. ASSET DELIVERY
+────────────────────────────────────────────────────────────
+RaPaX™ delivers digital assets via:
+
+- Cryptographically random, time-limited download tokens.
+- No direct file paths are ever exposed to buyers.
+- All tokens expire per your configured TTL.
+- All delivery events are immutably logged.
+
+────────────────────────────────────────────────────────────
+5. AcerbE™ INTEGRATION
+────────────────────────────────────────────────────────────
+RaPaX™ integrates with AcerbE™ for asset fingerprinting.
+
+When AcerbE™ is configured:
+- Each asset is fingerprinted with buyer identity,
+  transaction ID, and timestamp before delivery.
+- Fingerprinted files are stored separately from originals.
+- All fingerprint metadata is logged in the Audit Log.
+
+RaPaX™ includes a development fallback fingerprint for
+use when AcerbE™ is not reachable. This fallback is NOT
+suitable for production use and does not provide the
+cryptographic protections of AcerbE™.
+
+────────────────────────────────────────────────────────────
+6. AUDIT LOGGING
+────────────────────────────────────────────────────────────
+RaPaX™ maintains an immutable, append-only Audit Log.
+
+The Audit Log records:
+- All payment events and confirmations
+- All fingerprinting events
+- All delivery events and download activity
+- All product changes by the operator
+
+The Audit Log is stored locally on your infrastructure.
+It is not transmitted to Archer Chain Analytics™.
+The Audit Log is not a court-certified forensic record
+without independent expert verification.
+
+────────────────────────────────────────────────────────────
+7. NO PLATFORM CONTROL
+────────────────────────────────────────────────────────────
+RaPaX™ is a sovereign platform. Archer Chain Analytics™:
+
+- Does not control, monitor, or access your store.
+- Cannot delist, suspend, or ban your products.
+- Cannot alter your pricing or terms.
+- Cannot revoke access to your files or data.
+- Has no authority over transactions between you and
+  your Buyers.
+
+You are the sole operator of your RaPaX™ deployment.
+
+────────────────────────────────────────────────────────────
+8. OPEN-SOURCE DEPENDENCIES
+────────────────────────────────────────────────────────────
+RaPaX™ uses the following open-source components:
+
+- Express.js — MIT License
+- sql.js — MIT License
+- jsonwebtoken — MIT License
+- multer — MIT License
+- axios — MIT License
+- uuid — MIT License
+- node-cron — MIT License
+- csv-writer — MIT License
+- bcryptjs — MIT License
+- helmet — MIT License
+- cors — MIT License
+- morgan — MIT License
+- express-rate-limit — MIT License
+
+Full SBOM is provided in SBOM.txt.
+
+────────────────────────────────────────────────────────────
+9. INTENDED USE
+────────────────────────────────────────────────────────────
+RaPaX™ is intended for:
+
+- Digital product creators selling their own assets.
+- Developers building sovereign commerce infrastructure.
+- Operators requiring zero-platform-dependency product
+  delivery with full audit trail.
+
+RaPaX™ is not intended for:
+
+- Sale of illegal goods or services.
+- Money transmission or financial intermediation.
+- Circumvention of lawful rights or regulations.
+- Any unlawful purpose.
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────

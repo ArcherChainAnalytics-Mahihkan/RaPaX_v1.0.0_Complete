@@ -1,0 +1,103 @@
+RaPaX™ Software License Agreement
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+Effective upon installation or use.
+
+────────────────────────────────────────────────────────────
+1. GRANT OF LICENSE
+────────────────────────────────────────────────────────────
+Archer Chain Analytics™ grants you a non-exclusive,
+non-transferable, non-sublicensable license to install
+and operate RaPaX™ on systems you own or control,
+subject to the tier restrictions defined in the EULA.
+
+License is granted for lawful use only.
+No ownership rights are conveyed.
+Source code rights are granted only under BUILDER and
+SOVEREIGN tiers, for internal use only.
+
+────────────────────────────────────────────────────────────
+2. PERMITTED USES
+────────────────────────────────────────────────────────────
+You may:
+
+- Operate RaPaX™ to sell your own digital products.
+- Generate payment addresses, delivery tokens, and
+  audit logs for your operational use.
+- Integrate RaPaX™ with AcerbE™ for asset fingerprinting.
+- Configure blockchain payment providers per your
+  operational requirements.
+
+────────────────────────────────────────────────────────────
+3. PROHIBITED USES
+────────────────────────────────────────────────────────────
+You may not:
+
+- Sell, sublicense, lease, transfer, or distribute
+  RaPaX™ or any derivative work beyond tier permissions.
+- Modify, decompile, or reverse engineer RaPaX™ beyond
+  your granted source code rights.
+- Remove, alter, or obscure trademarks, copyright notices,
+  or integrity markers.
+- Use RaPaX™ to process transactions for unlawful goods
+  or services.
+- Use RaPaX™ for any unlawful or harmful purpose.
+
+────────────────────────────────────────────────────────────
+4. INTELLECTUAL PROPERTY
+────────────────────────────────────────────────────────────
+RaPaX™ — including its engine, pipeline, architecture,
+and all documentation — is the exclusive intellectual
+property of Archer Chain Analytics™. All rights reserved.
+No rights are transferred by purchase or use.
+
+────────────────────────────────────────────────────────────
+5. DATA HANDLING
+────────────────────────────────────────────────────────────
+RaPaX™ operates on your own infrastructure.
+No data is transmitted to Archer Chain Analytics™.
+No telemetry is collected. No cloud dependency exists.
+
+You are solely responsible for lawful handling, storage,
+and processing of all data within your RaPaX™ deployment.
+
+────────────────────────────────────────────────────────────
+6. UPKEEP SERVICES
+────────────────────────────────────────────────────────────
+Upkeep services are provided at no additional charge
+once the license is paid in full. Scope is defined in
+the EULA Section 6.
+
+────────────────────────────────────────────────────────────
+7. TERMINATION
+────────────────────────────────────────────────────────────
+This license terminates immediately upon breach.
+Upon termination, you must cease all use and destroy
+all copies. Archer Chain Analytics™ reserves all remedies.
+
+────────────────────────────────────────────────────────────
+8. LIMITATION OF LIABILITY
+────────────────────────────────────────────────────────────
+RaPaX™ is provided AS IS. No warranties of any kind.
+Archer Chain Analytics™ is not liable for damages
+arising from use, misuse, or inability to use RaPaX™.
+
+────────────────────────────────────────────────────────────
+9. GOVERNING LAW
+────────────────────────────────────────────────────────────
+Governed by the laws of Saskatchewan and the federal
+laws of Canada applicable therein.
+
+────────────────────────────────────────────────────────────
+10. ACCEPTANCE
+────────────────────────────────────────────────────────────
+Installation, access, or use of RaPaX™ constitutes
+acceptance of this Agreement in full.
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────

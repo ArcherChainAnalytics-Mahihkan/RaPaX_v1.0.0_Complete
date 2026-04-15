@@ -1,0 +1,146 @@
+RaPaX™ White-Label License Agreement
+Enterprise Rebranding and Resale Authorization
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+Document Type: Enterprise License — Confidential | Version: 1.0
+
+────────────────────────────────────────────────────────────
+PARTIES
+────────────────────────────────────────────────────────────
+Licensor:  Archer Chain Analytics™, Mahihkan.com,
+           Saskatoon, Saskatchewan, Canada.
+
+Licensee:  The entity identified in the executed
+           Order Form referencing this Agreement.
+
+────────────────────────────────────────────────────────────
+1. DEFINITIONS
+────────────────────────────────────────────────────────────
+"RaPaX™" means the vending engine, payment pipeline,
+  delivery system, operator dashboard, scripts, and
+  documentation.
+
+"White-Label Build" means a rebranded distribution of
+  RaPaX™ authorized under this Agreement.
+
+"Order Form" means the executed document specifying
+  scope, deployment count, fees, and authorized use.
+
+"Sublicensee" means an end-operator to whom Licensee
+  deploys or distributes the White-Label Build.
+
+"Territory" means the geographic scope defined in
+  the Order Form.
+
+────────────────────────────────────────────────────────────
+2. GRANT OF WHITE-LABEL LICENSE
+────────────────────────────────────────────────────────────
+Subject to payment of all fees and compliance with this
+Agreement, Archer Chain Analytics™ grants Licensee a
+limited, non-exclusive, non-transferable license to:
+
+- Rebrand RaPaX™ under Licensee's own product name.
+- Deploy the White-Label Build on up to the number of
+  instances specified in the Order Form.
+- Distribute the White-Label Build to Sublicensees
+  within the Territory under terms no less restrictive
+  than this Agreement.
+
+────────────────────────────────────────────────────────────
+3. RESTRICTIONS
+────────────────────────────────────────────────────────────
+Licensee may not:
+
+- Remove or obscure internal attribution markers,
+  fingerprint metadata, or integrity structures.
+- Sub-sublicense beyond Sublicensees without prior
+  written consent of Archer Chain Analytics™.
+- Represent the White-Label Build as original development
+  for purposes of IP registration.
+- Modify the core payment pipeline, delivery engine,
+  audit architecture, or security model.
+- Distribute outside the Territory without amendment.
+- Sell or transfer this Agreement to any third party.
+
+────────────────────────────────────────────────────────────
+4. IP RETENTION
+────────────────────────────────────────────────────────────
+All intellectual property in RaPaX™ — including the
+engine, pipeline, architecture, audit system, and
+delivery logic — remains the exclusive property of
+Archer Chain Analytics™. This Agreement conveys no
+ownership rights whatsoever.
+
+────────────────────────────────────────────────────────────
+5. AUDIT RIGHTS
+────────────────────────────────────────────────────────────
+Archer Chain Analytics™ may audit Licensee's distribution
+and deployment activities upon thirty (30) days written
+notice. Licensee shall maintain accurate records of all
+White-Label Build deployments and Sublicensees.
+
+────────────────────────────────────────────────────────────
+6. FEES AND ROYALTIES
+────────────────────────────────────────────────────────────
+Fees and royalty structures are defined in the executed
+Order Form. Failure to remit fees constitutes a material
+breach and terminates this Agreement immediately.
+
+────────────────────────────────────────────────────────────
+7. UPKEEP OBLIGATIONS
+────────────────────────────────────────────────────────────
+White-label deployments receive upkeep under the terms
+defined in the Order Form. Sublicensee upkeep is the
+responsibility of the Licensee unless otherwise specified.
+
+────────────────────────────────────────────────────────────
+8. ENFORCEMENT OBLIGATIONS
+────────────────────────────────────────────────────────────
+Licensee is responsible for enforcing Sublicensee terms.
+Licensee shall notify Archer Chain Analytics™ of any
+known breach by a Sublicensee within five (5) business
+days of discovery.
+
+────────────────────────────────────────────────────────────
+9. TERMINATION
+────────────────────────────────────────────────────────────
+This Agreement terminates immediately upon material
+breach. Upon termination, Licensee must cease all
+distribution and notify all Sublicensees. Archer Chain
+Analytics™ reserves all legal remedies.
+
+────────────────────────────────────────────────────────────
+10. LIMITATION OF LIABILITY
+────────────────────────────────────────────────────────────
+Total liability of Archer Chain Analytics™ under this
+Agreement shall not exceed fees paid by Licensee in
+the twelve (12) months preceding the claim.
+
+────────────────────────────────────────────────────────────
+11. GOVERNING LAW
+────────────────────────────────────────────────────────────
+Governed by the laws of Saskatchewan and the federal
+laws of Canada. Disputes shall be resolved by binding
+arbitration in Saskatoon, Saskatchewan.
+
+────────────────────────────────────────────────────────────
+EXECUTION
+────────────────────────────────────────────────────────────
+
+Archer Chain Analytics™                Licensee
+
+Signature: _____________________   Signature: _____________________
+
+Name: __________________________   Name: __________________________
+
+Title: _________________________   Title: _________________________
+
+Date: __________________________   Date: __________________________
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────

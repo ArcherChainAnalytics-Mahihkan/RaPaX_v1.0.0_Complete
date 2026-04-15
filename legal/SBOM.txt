@@ -1,0 +1,207 @@
+RaPaX™ Software Bill of Materials (SBOM)
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+SBOM Version: 1.0
+RaPaX™ Version: 1.0.0
+Format: SPDX-inspired plain text
+Date: 2025
+
+────────────────────────────────────────────────────────────
+1. PRIMARY COMPONENT
+────────────────────────────────────────────────────────────
+Name:             RaPaX™
+Version:          1.0.0
+Supplier:         Archer Chain Analytics™
+License:          Proprietary — See LICENSE.txt
+Copyright:        © Archer Chain Analytics™. All rights reserved.
+Classification:   Sovereign Digital Product Vending Platform
+
+────────────────────────────────────────────────────────────
+2. RUNTIME ENVIRONMENT
+────────────────────────────────────────────────────────────
+Name:             Node.js
+Version:          18 LTS or higher (22 LTS recommended)
+Supplier:         OpenJS Foundation
+Source:           https://nodejs.org
+License:          MIT License
+Purpose:          Runtime environment
+Transmission:     None beyond operator-configured APIs.
+
+────────────────────────────────────────────────────────────
+3. CORE FRAMEWORK
+────────────────────────────────────────────────────────────
+Name:             Express.js
+Version:          4.18.x
+License:          MIT License
+Source:           https://expressjs.com
+Purpose:          HTTP server and routing framework.
+
+────────────────────────────────────────────────────────────
+4. DATABASE
+────────────────────────────────────────────────────────────
+Name:             sql.js
+Version:          1.x (latest stable)
+License:          MIT License
+Source:           https://github.com/sql-js/sql.js
+Purpose:          SQLite3 engine compiled to WebAssembly.
+                  All data stored locally on operator system.
+Transmission:     None. Local execution only.
+
+────────────────────────────────────────────────────────────
+5. AUTHENTICATION
+────────────────────────────────────────────────────────────
+Name:             jsonwebtoken
+Version:          9.x
+License:          MIT License
+Purpose:          Operator JWT authentication.
+
+Name:             bcryptjs
+Version:          2.x
+License:          MIT License
+Purpose:          Credential hashing. Pure JavaScript.
+                  No native compilation required.
+
+────────────────────────────────────────────────────────────
+6. FILE HANDLING
+────────────────────────────────────────────────────────────
+Name:             multer
+Version:          2.x
+License:          MIT License
+Purpose:          Multipart file upload handling for
+                  product file ingestion.
+
+────────────────────────────────────────────────────────────
+7. HTTP CLIENT
+────────────────────────────────────────────────────────────
+Name:             axios
+Version:          1.x
+License:          MIT License
+Purpose:          Blockchain provider API calls and
+                  AcerbE™ fingerprinting service calls.
+Transmission:     Outbound only to operator-configured
+                  blockchain endpoints and AcerbE™.
+
+────────────────────────────────────────────────────────────
+8. SCHEDULING
+────────────────────────────────────────────────────────────
+Name:             node-cron
+Version:          3.x
+License:          MIT License
+Purpose:          Payment polling cron job (60s interval).
+
+────────────────────────────────────────────────────────────
+9. EXPORT
+────────────────────────────────────────────────────────────
+Name:             csv-writer
+Version:          1.x
+License:          MIT License
+Purpose:          Audit log CSV export.
+
+────────────────────────────────────────────────────────────
+10. SECURITY MIDDLEWARE
+────────────────────────────────────────────────────────────
+Name:             helmet
+Version:          7.x
+License:          MIT License
+Purpose:          HTTP security headers.
+
+Name:             cors
+Version:          2.x
+License:          MIT License
+Purpose:          Cross-origin resource sharing control.
+
+Name:             express-rate-limit
+Version:          7.x
+License:          MIT License
+Purpose:          Rate limiting on public endpoints.
+
+────────────────────────────────────────────────────────────
+11. UTILITIES
+────────────────────────────────────────────────────────────
+Name:             uuid
+Version:          9.x
+License:          MIT License
+Purpose:          UUID generation for all IDs and tokens.
+
+Name:             morgan
+Version:          1.x
+License:          MIT License
+Purpose:          HTTP request logging (local only).
+
+Name:             dotenv
+Version:          16.x
+License:          BSD-2-Clause License
+Purpose:          Environment variable loading.
+
+────────────────────────────────────────────────────────────
+12. NODE.JS STANDARD LIBRARY MODULES
+────────────────────────────────────────────────────────────
+The following built-in Node.js modules are used.
+These are part of the Node.js runtime (MIT License).
+
+- crypto       — Token and secret generation
+- fs           — File system operations
+- path         — Path handling
+- url          — URL parsing
+- stream       — Stream handling
+- http         — HTTP server (via Express)
+- os           — OS detection in installers
+- events       — Event emitter
+
+────────────────────────────────────────────────────────────
+13. EXTERNAL SERVICES — OPERATOR-CONFIGURED
+────────────────────────────────────────────────────────────
+The following external services are called only when
+configured by the operator. None are required defaults.
+
+BlockCypher API  — BTC on-chain monitoring
+Etherscan API    — ETH/USDT on-chain monitoring
+Infura/Alchemy   — ETH RPC provider (operator choice)
+Helius/QuickNode — SOL RPC provider (operator choice)
+AcerbE™          — Asset fingerprinting (local or API)
+
+────────────────────────────────────────────────────────────
+14. DATA STORES
+────────────────────────────────────────────────────────────
+Name:             rapax.db
+Type:             SQLite3 (via sql.js WebAssembly)
+Location:         Operator-controlled local directory
+Contents:         Products, transactions, payment addresses,
+                  fingerprints, deliveries, audit log,
+                  operator sessions.
+Transmission:     None. Never transmitted externally.
+Access Control:   Operator responsibility.
+
+Name:             storage/products/
+Type:             Filesystem directory
+Contents:         Operator-uploaded product files.
+Transmission:     None directly. Files delivered via
+                  tokenized expiring download links.
+
+Name:             storage/fingerprinted/
+Type:             Filesystem directory
+Contents:         AcerbE™-fingerprinted output files.
+Transmission:     Delivered via tokenized download only.
+
+────────────────────────────────────────────────────────────
+15. KNOWN VULNERABILITIES
+────────────────────────────────────────────────────────────
+No known critical vulnerabilities in RaPaX™ v1.0.0
+at time of release.
+
+Operators are responsible for keeping Node.js and all
+dependencies updated to current stable releases.
+
+────────────────────────────────────────────────────────────
+16. INTEGRITY VERIFICATION
+────────────────────────────────────────────────────────────
+SHA-256 checksums for RaPaX™ v1.0.0 distribution files
+are provided separately in CHECKSUMS.txt upon request.
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────

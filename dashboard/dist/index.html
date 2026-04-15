@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>RaPaX™ Operator Dashboard</title>
+  <style>
+    /* ── Design Tokens ── */
+    :root {
+      --black:       #000000;
+      --black-soft:  #0d0d0d;
+      --black-card:  #141414;
+      --black-border:#222222;
+      --gold:        #C9A84C;
+      --gold-bright: #E8C76A;
+      --gold-dim:    #7a6230;
+      --white:       #FFFFFF;
+      --white-dim:   #aaaaaa;
+      --red:         #c0392b;
+      --green:       #27ae60;
+      --font:        'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 15px;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    #app { display: flex; flex-direction: column; min-height: 100vh; }
+
+    header {
+      background: var(--black-soft);
+      border-bottom: 1px solid var(--gold-dim);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--white-dim); font-size: 11px; font-weight: 400; display: block; letter-spacing: 1px; }
+
+    #logout-btn {
+      background: none;
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    #logout-btn:hover { border-color: var(--gold); }
+
+    nav {
+      background: var(--black-soft);
+      border-bottom: 1px solid var(--black-border);
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar { display: none; }
+
+    nav button {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--white-dim);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      padding: 14px 20px;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    nav button.active { color: var(--gold); border-bottom-color: var(--gold); }
+    nav button:hover  { color: var(--white); }
+
+    main { flex: 1; padding: 20px; max-width: 900px; width: 100%; margin: 0 auto; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* ── Stats Grid ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 600px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .stat-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-value { font-size: 28px; font-weight: 700; color: var(--gold); }
+    .stat-label { font-size: 11px; color: var(--white-dim); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── Forms ── */
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; color: var(--gold); font-weight: 500; margin-bottom: 6px; letter-spacing: 0.5px; }
+
+    input[type="text"], input[type="number"], input[type="password"],
+    textarea, select {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid var(--black-border);
+      border-radius: 8px;
+      color: var(--white);
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 500px) { .price-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .file-drop {
+      border: 2px dashed var(--gold-dim);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .file-drop:hover, .file-drop.drag-over { border-color: var(--gold); background: #1a1500; }
+    .file-drop-icon { font-size: 28px; margin-bottom: 8px; }
+    .file-drop-text { color: var(--white-dim); font-size: 13px; }
+    .file-drop-name { color: var(--gold); font-size: 13px; margin-top: 8px; font-weight: 600; }
+    #file-input { display: none; }
+
+    /* ── Buttons ── */
+    .btn {
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 12px 22px;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-gold  { background: var(--gold); color: var(--black); }
+    .btn-gold:hover:not(:disabled) { background: var(--gold-bright); }
+    .btn-ghost { background: none; border: 1px solid var(--black-border); color: var(--white-dim); }
+    .btn-ghost:hover { border-color: var(--gold-dim); color: var(--white); }
+    .btn-danger { background: var(--red); color: var(--white); }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .btn-full { width: 100%; }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 10px 12px;
+      text-align: left;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--black-border);
+      white-space: nowrap;
+    }
+    td { padding: 12px; border-bottom: 1px solid #1a1a1a; color: var(--white-dim); vertical-align: middle; }
+    tr:hover td { background: #111; }
+    .mono { font-family: 'SF Mono', monospace; font-size: 11px; }
+
+    /* ── Status badges ── */
+    .badge {
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 3px 9px;
+      text-transform: uppercase;
+    }
+    .badge-pending      { background: #2a2a00; color: #e6b800; }
+    .badge-confirming   { background: #001a33; color: #4da6ff; }
+    .badge-confirmed    { background: #001a1a; color: #00cccc; }
+    .badge-fingerprinting { background: #1a0033; color: #cc66ff; }
+    .badge-delivering   { background: #001a00; color: #66ff66; }
+    .badge-complete     { background: #001a00; color: var(--green); }
+    .badge-failed       { background: #1a0000; color: var(--red); }
+    .badge-expired      { background: #1a1a1a; color: #666; }
+    .badge-available    { background: #001a00; color: var(--green); }
+    .badge-unavailable  { background: #1a0000; color: var(--red); }
+
+    /* ── Toggle ── */
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 42px;
+      height: 24px;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #333;
+      border-radius: 24px;
+      transition: 0.3s;
+    }
+    .toggle-slider:before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; bottom: 3px;
+      background: var(--white);
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    input:checked + .toggle-slider { background: var(--gold); }
+    input:checked + .toggle-slider:before { transform: translateX(18px); }
+
+    /* ── Login Screen ── */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .login-box {
+      background: var(--black-card);
+      border: 1px solid var(--gold-dim);
+      border-radius: 16px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .login-logo { font-size: 36px; font-weight: 800; letter-spacing: 6px; color: var(--gold); margin-bottom: 6px; }
+    .login-sub  { font-size: 12px; color: var(--white-dim); letter-spacing: 2px; margin-bottom: 32px; text-transform: uppercase; }
+    .login-error { color: var(--red); font-size: 13px; margin-top: 10px; }
+
+    /* ── Alerts ── */
+    .alert {
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      padding: 12px 16px;
+    }
+    .alert-success { background: #001a00; border: 1px solid #004d00; color: #00cc66; }
+    .alert-error   { background: #1a0000; border: 1px solid #4d0000; color: #ff4444; }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+    }
+    @media (min-width: 600px) {
+      .modal-overlay { align-items: center; padding: 20px; }
+    }
+    .modal {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 16px 16px 0 0;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 600px;
+    }
+    @media (min-width: 600px) { .modal { border-radius: 16px; } }
+    .modal-title {
+      color: var(--gold);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    /* ── Utility ── */
+    .hidden    { display: none !important; }
+    .flex      { display: flex; }
+    .items-center { align-items: center; }
+    .gap-8     { gap: 8px; }
+    .gap-12    { gap: 12px; }
+    .mt-8      { margin-top: 8px; }
+    .mt-16     { margin-top: 16px; }
+    .text-gold { color: var(--gold); }
+    .text-dim  { color: var(--white-dim); }
+    .text-sm   { font-size: 12px; }
+    .truncate  { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">RAPAX</div>
+    <div class="login-sub">Operator Dashboard</div>
+    <div class="form-group">
+      <label>OPERATOR SECRET</label>
+      <input type="password" id="login-secret" placeholder="Enter secret key" />
+    </div>
+    <button class="btn btn-gold btn-full mt-16" id="login-btn">ACCESS DASHBOARD</button>
+    <div class="login-error hidden" id="login-error">Invalid operator secret</div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ──────────────────────────────────────────── -->
+<div id="app" class="hidden">
+  <header>
+    <div class="logo">RaPaX™ <span>SOVEREIGN VENDING MACHINE</span></div>
+    <button id="logout-btn">LOGOUT</button>
+  </header>
+
+  <nav id="nav">
+    <button class="active" data-tab="overview">OVERVIEW</button>
+    <button data-tab="products">PRODUCTS</button>
+    <button data-tab="upload">UPLOAD</button>
+    <button data-tab="transactions">TRANSACTIONS</button>
+    <button data-tab="deliveries">DELIVERIES</button>
+    <button data-tab="logs">AUDIT LOG</button>
+  </nav>
+
+  <main>
+    <div id="alert-box" class="hidden"></div>
+
+    <!-- OVERVIEW TAB -->
+    <div id="tab-overview">
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card"><div class="stat-value" id="stat-products">—</div><div class="stat-label">Products</div></div>
+        <div class="stat-card"><div class="stat-value" id="stat-transactions">—</div><div class="stat-label">Transactions</div></div>
+        <div class="stat-card"><div class="stat-value" id="stat-complete">—</div><div class="stat-label">Completed</div></div>
+        <div class="stat-card"><div class="stat-value" id="stat-deliveries">—</div><div class="stat-label">Deliveries</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Recent Transactions</div>
+        <div class="table-wrap">
+          <table id="overview-tx-table">
+            <thead><tr><th>ID</th><th>Product</th><th>Currency</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="overview-tx-body"><tr><td colspan="6" class="text-dim">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Export</div>
+        <div class="flex gap-12">
+          <button class="btn btn-ghost" onclick="exportLogs('json')">⬇ JSON</button>
+          <button class="btn btn-ghost" onclick="exportLogs('csv')">⬇ CSV</button>
+          <button class="btn btn-ghost" onclick="exportLogs('deliveries')">⬇ Deliveries</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS TAB -->
+    <div id="tab-products" class="hidden">
+      <div class="card">
+        <div class="card-title">All Products</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Version</th><th>BTC</th><th>ETH</th><th>SOL</th><th>USDT</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="products-body"><tr><td colspan="8" class="text-dim">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPLOAD TAB -->
+    <div id="tab-upload" class="hidden">
+      <div class="card">
+        <div class="card-title">Upload Product</div>
+
+        <div class="form-group">
+          <label>PRODUCT NAME *</label>
+          <input type="text" id="up-name" placeholder="e.g. Elite Beat Pack Vol. 1" />
+        </div>
+        <div class="form-group">
+          <label>DESCRIPTION</label>
+          <textarea id="up-desc" placeholder="Describe your product…"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>PRICES</label>
+          <div class="price-grid">
+            <div><input type="number" id="up-btc"  placeholder="BTC"  step="0.00001" /></div>
+            <div><input type="number" id="up-eth"  placeholder="ETH"  step="0.001" /></div>
+            <div><input type="number" id="up-sol"  placeholder="SOL"  step="0.01" /></div>
+            <div><input type="number" id="up-usdt" placeholder="USDT" step="0.01" /></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>VERSION</label>
+          <input type="text" id="up-ver" placeholder="1.0.0" value="1.0.0" />
+        </div>
+
+        <div class="form-group">
+          <label>PRODUCT FILE *</label>
+          <div class="file-drop" id="file-drop">
+            <div class="file-drop-icon">📦</div>
+            <div class="file-drop-text">Tap to select or drag & drop</div>
+            <div class="file-drop-name hidden" id="file-drop-name"></div>
+            <input type="file" id="file-input" />
+          </div>
+        </div>
+
+        <button class="btn btn-gold btn-full mt-16" id="upload-btn">UPLOAD PRODUCT</button>
+      </div>
+    </div>
+
+    <!-- TRANSACTIONS TAB -->
+    <div id="tab-transactions" class="hidden">
+      <div class="card">
+        <div class="card-title">All Transactions</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Product</th><th>Currency</th><th>Expected</th><th>Received</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="transactions-body"><tr><td colspan="8" class="text-dim">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELIVERIES TAB -->
+    <div id="tab-deliveries" class="hidden">
+      <div class="card">
+        <div class="card-title">Delivery Log</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>TX ID</th><th>Product</th><th>Buyer</th><th>Fingerprint</th><th>Hash</th><th>Downloads</th><th>Expires</th></tr></thead>
+            <tbody id="deliveries-body"><tr><td colspan="7" class="text-dim">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGS TAB -->
+    <div id="tab-logs" class="hidden">
+      <div class="card">
+        <div class="card-title">Audit Log</div>
+        <div class="flex gap-8 mt-8" style="margin-bottom:16px;flex-wrap:wrap;">
+          <select id="log-filter-type" style="width:auto;">
+            <option value="">All Events</option>
+            <option value="PAYMENT">PAYMENT</option>
+            <option value="FINGERPRINT">FINGERPRINT</option>
+            <option value="DELIVERY">DELIVERY</option>
+            <option value="PRODUCT">PRODUCT</option>
+            <option value="SYSTEM">SYSTEM</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" onclick="loadLogs()">FILTER</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Type</th><th>Actor</th><th>TX ID</th><th>Product</th><th>Time</th><th>Payload</th></tr></thead>
+            <tbody id="logs-body"><tr><td colspan="6" class="text-dim">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div id="edit-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-title">EDIT PRODUCT</div>
+    <input type="hidden" id="edit-id" />
+    <div class="form-group"><label>NAME</label><input type="text" id="edit-name" /></div>
+    <div class="form-group"><label>DESCRIPTION</label><textarea id="edit-desc"></textarea></div>
+    <div class="form-group">
+      <label>PRICES</label>
+      <div class="price-grid">
+        <input type="number" id="edit-btc"  placeholder="BTC"  step="0.00001" />
+        <input type="number" id="edit-eth"  placeholder="ETH"  step="0.001" />
+        <input type="number" id="edit-sol"  placeholder="SOL"  step="0.01" />
+        <input type="number" id="edit-usdt" placeholder="USDT" step="0.01" />
+      </div>
+    </div>
+    <div class="form-group"><label>VERSION</label><input type="text" id="edit-ver" /></div>
+    <div class="flex gap-12 mt-16">
+      <button class="btn btn-gold" id="edit-save-btn">SAVE CHANGES</button>
+      <button class="btn btn-ghost" onclick="closeModal()">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+//  RaPaX™ Dashboard — Client JS
+// ─────────────────────────────────────────────────────────────
+const API = '/api';
+let TOKEN = localStorage.getItem('rapax_token') || '';
+
+// ── Auth ──────────────────────────────────────────────────────
+async function login() {
+  const secret = document.getElementById('login-secret').value.trim();
+  if (!secret) return;
+  try {
+    const res  = await fetch(`${API}/operator/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    TOKEN = data.token;
+    localStorage.setItem('rapax_token', TOKEN);
+    showDashboard();
+  } catch (e) {
+    document.getElementById('login-error').classList.remove('hidden');
+    document.getElementById('login-error').textContent = e.message;
+  }
+}
+
+function logout() {
+  TOKEN = '';
+  localStorage.removeItem('rapax_token');
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('login-screen').classList.remove('hidden');
+}
+
+function showDashboard() {
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  switchTab('overview');
+}
+
+// Check if already logged in
+if (TOKEN) showDashboard();
+
+document.getElementById('login-btn').onclick  = login;
+document.getElementById('logout-btn').onclick = logout;
+document.getElementById('login-secret').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+
+// ── Authenticated fetch ───────────────────────────────────────
+async function apiFetch(path, opts = {}) {
+  const res = await fetch(`${API}${path}`, {
+    ...opts,
+    headers: {
+      ...opts.headers,
+      Authorization: `Bearer ${TOKEN}`,
+    },
+  });
+  if (res.status === 401) { logout(); return; }
+  return res;
+}
+
+// ── Alert ─────────────────────────────────────────────────────
+function showAlert(msg, type = 'success') {
+  const box = document.getElementById('alert-box');
+  box.className = `alert alert-${type}`;
+  box.textContent = msg;
+  box.classList.remove('hidden');
+  setTimeout(() => box.classList.add('hidden'), 5000);
+}
+
+// ── Tabs ──────────────────────────────────────────────────────
+const TABS = ['overview','products','upload','transactions','deliveries','logs'];
+
+function switchTab(tab) {
+  TABS.forEach(t => {
+    document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
+  });
+  document.querySelectorAll('nav button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+  const loaders = {
+    overview:     loadOverview,
+    products:     loadProducts,
+    transactions: loadTransactions,
+    deliveries:   loadDeliveries,
+    logs:         loadLogs,
+  };
+  if (loaders[tab]) loaders[tab]();
+}
+
+document.getElementById('nav').querySelectorAll('button').forEach(btn => {
+  btn.onclick = () => switchTab(btn.dataset.tab);
+});
+
+// ── Badge ─────────────────────────────────────────────────────
+function badge(status) {
+  return `<span class="badge badge-${status}">${status}</span>`;
+}
+
+function shortId(id) {
+  return id ? `<span class="mono truncate" title="${id}">${id.slice(0,8)}…</span>` : '—';
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleString(undefined, { dateStyle:'short', timeStyle:'short' });
+}
+
+// ── Overview ──────────────────────────────────────────────────
+async function loadOverview() {
+  const [pRes, tRes, dRes] = await Promise.all([
+    apiFetch('/operator/products'),
+    apiFetch('/operator/transactions'),
+    apiFetch('/operator/deliveries'),
+  ]);
+  const products     = (await pRes.json()).products     || [];
+  const transactions = (await tRes.json()).transactions || [];
+  const deliveries   = (await dRes.json()).deliveries   || [];
+
+  document.getElementById('stat-products').textContent     = products.length;
+  document.getElementById('stat-transactions').textContent = transactions.length;
+  document.getElementById('stat-complete').textContent     = transactions.filter(t => t.status === 'complete').length;
+  document.getElementById('stat-deliveries').textContent   = deliveries.length;
+
+  const recent = transactions.slice(0, 10);
+  const tbody  = document.getElementById('overview-tx-body');
+  tbody.innerHTML = recent.length ? recent.map(t => `
+    <tr>
+      <td>${shortId(t.transaction_id)}</td>
+      <td class="text-dim">${shortId(t.product_id)}</td>
+      <td><span class="mono">${t.currency}</span></td>
+      <td class="mono">${t.amount_expected}</td>
+      <td>${badge(t.status)}</td>
+      <td class="text-dim">${fmtDate(t.created_at)}</td>
+    </tr>
+  `).join('') : '<tr><td colspan="6" class="text-dim">No transactions yet</td></tr>';
+}
+
+// ── Products ──────────────────────────────────────────────────
+let allProducts = [];
+
+async function loadProducts() {
+  const res      = await apiFetch('/operator/products');
+  const data     = await res.json();
+  allProducts    = data.products || [];
+  const tbody    = document.getElementById('products-body');
+
+  tbody.innerHTML = allProducts.length ? allProducts.map(p => `
+    <tr>
+      <td><strong style="color:var(--white)">${p.name}</strong><br><span class="text-dim text-sm">${shortId(p.product_id)}</span></td>
+      <td class="mono">${p.version}</td>
+      <td class="mono">${p.price_btc ?? '—'}</td>
+      <td class="mono">${p.price_eth ?? '—'}</td>
+      <td class="mono">${p.price_sol ?? '—'}</td>
+      <td class="mono">${p.price_usdt ?? '—'}</td>
+      <td>${badge(p.availability ? 'available' : 'unavailable')}</td>
+      <td>
+        <div class="flex gap-8">
+          <button class="btn btn-ghost btn-sm" onclick="openEdit('${p.product_id}')">EDIT</button>
+          <label class="toggle" title="Toggle availability">
+            <input type="checkbox" ${p.availability ? 'checked' : ''} onchange="toggleProduct('${p.product_id}', this)" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="8" class="text-dim">No products uploaded yet</td></tr>';
+}
+
+async function toggleProduct(id, checkbox) {
+  const res  = await apiFetch(`/operator/products/${id}/toggle`, { method: 'PATCH' });
+  const data = await res.json();
+  if (!res.ok) { showAlert(data.error, 'error'); checkbox.checked = !checkbox.checked; return; }
+  showAlert(`${data.product.name} is now ${data.product.availability ? 'AVAILABLE' : 'UNAVAILABLE'}`);
+}
+
+// ── Upload ────────────────────────────────────────────────────
+const fileDrop  = document.getElementById('file-drop');
+const fileInput = document.getElementById('file-input');
+const fileDropName = document.getElementById('file-drop-name');
+
+fileDrop.onclick = () => fileInput.click();
+
+fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('drag-over'); });
+fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('drag-over'));
+fileDrop.addEventListener('drop', e => {
+  e.preventDefault();
+  fileDrop.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) {
+    fileInput.files = e.dataTransfer.files;
+    fileDropName.textContent = e.dataTransfer.files[0].name;
+    fileDropName.classList.remove('hidden');
+  }
+});
+fileInput.onchange = () => {
+  if (fileInput.files[0]) {
+    fileDropName.textContent = fileInput.files[0].name;
+    fileDropName.classList.remove('hidden');
+  }
+};
+
+document.getElementById('upload-btn').onclick = async () => {
+  const name    = document.getElementById('up-name').value.trim();
+  const file    = fileInput.files[0];
+  if (!name) { showAlert('Product name is required', 'error'); return; }
+  if (!file)  { showAlert('Please select a file', 'error'); return; }
+
+  const btn = document.getElementById('upload-btn');
+  btn.disabled = true; btn.textContent = 'UPLOADING…';
+
+  const fd = new FormData();
+  fd.append('name',        name);
+  fd.append('description', document.getElementById('up-desc').value);
+  fd.append('price_btc',   document.getElementById('up-btc').value);
+  fd.append('price_eth',   document.getElementById('up-eth').value);
+  fd.append('price_sol',   document.getElementById('up-sol').value);
+  fd.append('price_usdt',  document.getElementById('up-usdt').value);
+  fd.append('version',     document.getElementById('up-ver').value || '1.0.0');
+  fd.append('file',        file);
+
+  const res  = await apiFetch('/operator/products', { method: 'POST', body: fd });
+  const data = await res.json();
+  btn.disabled = false; btn.textContent = 'UPLOAD PRODUCT';
+
+  if (!res.ok) { showAlert(data.error, 'error'); return; }
+  showAlert(`✓ "${data.product.name}" uploaded successfully`);
+
+  // Reset form
+  ['up-name','up-desc','up-btc','up-eth','up-sol','up-usdt'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('up-ver').value = '1.0.0';
+  fileInput.value = '';
+  fileDropName.classList.add('hidden');
+};
+
+// ── Edit Modal ────────────────────────────────────────────────
+function openEdit(id) {
+  const p = allProducts.find(x => x.product_id === id);
+  if (!p) return;
+  document.getElementById('edit-id').value   = p.product_id;
+  document.getElementById('edit-name').value = p.name;
+  document.getElementById('edit-desc').value = p.description || '';
+  document.getElementById('edit-btc').value  = p.price_btc  ?? '';
+  document.getElementById('edit-eth').value  = p.price_eth  ?? '';
+  document.getElementById('edit-sol').value  = p.price_sol  ?? '';
+  document.getElementById('edit-usdt').value = p.price_usdt ?? '';
+  document.getElementById('edit-ver').value  = p.version;
+  document.getElementById('edit-modal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('edit-modal').classList.add('hidden');
+}
+
+document.getElementById('edit-modal').onclick = e => {
+  if (e.target === document.getElementById('edit-modal')) closeModal();
+};
+
+document.getElementById('edit-save-btn').onclick = async () => {
+  const id      = document.getElementById('edit-id').value;
+  const payload = {
+    name:        document.getElementById('edit-name').value,
+    description: document.getElementById('edit-desc').value,
+    price_btc:   parseFloat(document.getElementById('edit-btc').value)  || null,
+    price_eth:   parseFloat(document.getElementById('edit-eth').value)  || null,
+    price_sol:   parseFloat(document.getElementById('edit-sol').value)  || null,
+    price_usdt:  parseFloat(document.getElementById('edit-usdt').value) || null,
+    version:     document.getElementById('edit-ver').value,
+  };
+  const res  = await apiFetch(`/operator/products/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) { showAlert(data.error, 'error'); return; }
+  showAlert(`✓ "${data.product.name}" updated`);
+  closeModal();
+  loadProducts();
+};
+
+// ── Transactions ──────────────────────────────────────────────
+async function loadTransactions() {
+  const res  = await apiFetch('/operator/transactions?limit=200');
+  const data = await res.json();
+  const txs  = data.transactions || [];
+  const tbody = document.getElementById('transactions-body');
+
+  tbody.innerHTML = txs.length ? txs.map(t => `
+    <tr>
+      <td>${shortId(t.transaction_id)}</td>
+      <td>${shortId(t.product_id)}</td>
+      <td class="mono">${t.currency}</td>
+      <td class="mono">${t.amount_expected}</td>
+      <td class="mono">${t.amount_received ?? '—'}</td>
+      <td>${badge(t.status)}</td>
+      <td class="text-dim">${fmtDate(t.created_at)}</td>
+      <td>
+        ${t.status === 'pending' || t.status === 'confirming' ? `
+          <button class="btn btn-ghost btn-sm" onclick="confirmTx('${t.transaction_id}')">CONFIRM</button>
+        ` : ''}
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="8" class="text-dim">No transactions yet</td></tr>';
+}
+
+async function confirmTx(txId) {
+  const res  = await apiFetch('/payment/confirm', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ transaction_id: txId }),
+  });
+  const data = await res.json();
+  if (!res.ok) { showAlert(data.error, 'error'); return; }
+  showAlert('✓ Payment confirmed — pipeline started');
+  loadTransactions();
+}
+
+// ── Deliveries ────────────────────────────────────────────────
+async function loadDeliveries() {
+  const res   = await apiFetch('/operator/deliveries');
+  const data  = await res.json();
+  const rows  = data.deliveries || [];
+  const tbody = document.getElementById('deliveries-body');
+
+  tbody.innerHTML = rows.length ? rows.map(d => `
+    <tr>
+      <td>${shortId(d.transaction_id)}</td>
+      <td>${shortId(d.product_id)}</td>
+      <td class="mono">${d.buyer_wallet ? d.buyer_wallet.slice(0,10)+'…' : '—'}</td>
+      <td>${shortId(d.fingerprint_id)}</td>
+      <td class="mono" style="font-size:10px">${d.file_hash ? d.file_hash.slice(0,12)+'…' : '—'}</td>
+      <td class="text-dim">${d.download_count}</td>
+      <td class="text-dim">${fmtDate(d.expires_at)}</td>
+    </tr>
+  `).join('') : '<tr><td colspan="7" class="text-dim">No deliveries yet</td></tr>';
+}
+
+// ── Logs ──────────────────────────────────────────────────────
+async function loadLogs() {
+  const type  = document.getElementById('log-filter-type').value;
+  const query = type ? `?event_type=${type}&limit=200` : '?limit=200';
+  const res   = await apiFetch(`/operator/logs${query}`);
+  const data  = await res.json();
+  const logs  = data.logs || [];
+  const tbody = document.getElementById('logs-body');
+
+  tbody.innerHTML = logs.length ? logs.map(l => `
+    <tr>
+      <td>${badge(l.event_type.toLowerCase())}</td>
+      <td class="mono text-sm">${l.actor || '—'}</td>
+      <td>${shortId(l.transaction_id)}</td>
+      <td>${shortId(l.product_id)}</td>
+      <td class="text-dim">${fmtDate(l.created_at)}</td>
+      <td>
+        <button class="btn btn-ghost btn-sm" onclick="showPayload(this, '${encodeURIComponent(l.payload)}')">VIEW</button>
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="6" class="text-dim">No logs found</td></tr>';
+}
+
+function showPayload(btn, encoded) {
+  const payload = decodeURIComponent(encoded);
+  try {
+    const parsed = JSON.parse(payload);
+    btn.closest('tr').insertAdjacentHTML('afterend', `
+      <tr class="payload-row"><td colspan="6" style="background:#0a0a0a;padding:12px;">
+        <pre style="font-size:11px;color:var(--gold);white-space:pre-wrap;word-break:break-all;">${JSON.stringify(parsed, null, 2)}</pre>
+      </td></tr>
+    `);
+    btn.textContent = 'HIDE';
+    btn.onclick = () => {
+      const next = btn.closest('tr').nextElementSibling;
+      if (next?.classList.contains('payload-row')) next.remove();
+      btn.textContent = 'VIEW';
+      btn.onclick = () => showPayload(btn, encoded);
+    };
+  } catch {}
+}
+
+// ── Export ────────────────────────────────────────────────────
+async function exportLogs(type) {
+  const endpoints = {
+    json:       '/operator/export/json',
+    csv:        '/operator/export/csv',
+    deliveries: '/operator/export/deliveries',
+  };
+  const res = await apiFetch(endpoints[type]);
+  const blob = await res.blob();
+  const ext  = type === 'csv' ? 'csv' : 'json';
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `rapax_${type}_${Date.now()}.${ext}`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

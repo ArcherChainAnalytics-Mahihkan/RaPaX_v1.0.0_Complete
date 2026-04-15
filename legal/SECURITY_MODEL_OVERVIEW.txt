@@ -1,0 +1,164 @@
+RaPaX™ Security Model Overview
+Threat Model, Attack Surface, Mitigations, and Controls
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+Document Type: Security Documentation | Version: 1.0
+
+────────────────────────────────────────────────────────────
+1. SECURITY POSTURE
+────────────────────────────────────────────────────────────
+RaPaX™ is a zero-dependency, self-hosted vending platform.
+
+No data leaves your infrastructure to Archer Chain
+Analytics™. All cryptographic operations are local.
+All secrets are operator-controlled.
+
+────────────────────────────────────────────────────────────
+2. THREAT MODEL
+────────────────────────────────────────────────────────────
+
+THREAT: Unauthorized file access
+  VECTOR:  Buyer attempts to access files without payment.
+  CONTROL: Files are never exposed via URL. All delivery
+           uses cryptographically random 96-character
+           tokens with configurable expiry (default 1hr).
+           Direct file paths are never returned by any
+           public API endpoint.
+
+THREAT: Download token brute force
+  VECTOR:  Attacker attempts to guess download tokens.
+  CONTROL: Tokens are 96 hex characters (48 random bytes
+           from Node.js crypto.randomBytes). The space is
+           2^384 — computationally infeasible to brute force.
+
+THREAT: Token replay after expiry
+  VECTOR:  Buyer attempts to reuse an expired token.
+  CONTROL: Expiry is checked on every download request.
+           Expired tokens return HTTP 410 Gone.
+
+THREAT: Unauthorized operator dashboard access
+  VECTOR:  Third party attempts to access operator routes.
+  CONTROL: All operator endpoints require a signed JWT.
+           JWTs are signed with your OPERATOR_SECRET.
+           Tokens expire per your JWT_EXPIRES_IN setting.
+
+THREAT: Database tampering
+  VECTOR:  Attacker modifies transaction or audit records.
+  CONTROL: Audit log is append-only. No DELETE or UPDATE
+           is ever issued against the audit_log table.
+           Operators should restrict filesystem permissions
+           on rapax.db to the running user only.
+
+THREAT: Blockchain payment spoofing
+  VECTOR:  Operator bypasses payment to trigger delivery.
+  CONTROL: Manual payment confirmation requires operator
+           JWT authentication. All confirmations are
+           logged in the immutable audit trail.
+
+THREAT: File substitution before fingerprinting
+  VECTOR:  Pipeline delivers unfingerprtinted file.
+  CONTROL: File path used for fingerprinting is taken
+           from the product record at transaction time,
+           not from buyer input. No buyer-supplied paths
+           are accepted.
+
+THREAT: API key exposure
+  VECTOR:  Blockchain provider keys leaked.
+  CONTROL: Keys are stored in .env only, never in the
+           database or in any API response. Operators
+           should restrict .env file permissions.
+
+THREAT: Denial of service
+  VECTOR:  Attacker floods public endpoints.
+  CONTROL: Rate limiting via express-rate-limit on all
+           public endpoints. Configurable per deployment.
+
+────────────────────────────────────────────────────────────
+3. CRYPTOGRAPHIC CONTROLS
+────────────────────────────────────────────────────────────
+
+Download Token Generation:
+  Algorithm:  crypto.randomBytes(48)
+  Output:     96 hex characters
+  Entropy:    384 bits
+  Standard:   Node.js CSPRNG (OS-backed)
+
+JWT Signing:
+  Algorithm:  HS256 (HMAC-SHA256)
+  Secret:     Operator-configured — minimum 32 bytes
+              recommended.
+  Expiry:     Operator-configured (default 24h)
+
+────────────────────────────────────────────────────────────
+4. ATTACK SURFACE
+────────────────────────────────────────────────────────────
+
+Surface: Public API endpoints (/products, /purchase,
+         /download)
+  Exposure: Internet-facing (operator-deployed)
+  Mitigation: Rate limiting, input validation,
+               no file paths in responses.
+
+Surface: Operator API endpoints (/operator/*, /internal/*)
+  Exposure: Operator network only (recommended)
+  Mitigation: JWT authentication on all routes.
+               Recommend firewall restriction to
+               trusted IP ranges.
+
+Surface: RaPaX™ database (rapax.db)
+  Exposure: Local filesystem only
+  Mitigation: Restrict permissions to running user.
+               Back up with access controls applied.
+
+Surface: .env configuration file
+  Exposure: Local filesystem only
+  Mitigation: chmod 600 .env on Linux/macOS.
+               Restrict to running user on Windows.
+
+Surface: storage/products/ and storage/fingerprinted/
+  Exposure: Local filesystem only
+  Mitigation: Never expose these directories via a
+               web server. Access only via RaPaX™ API.
+
+────────────────────────────────────────────────────────────
+5. OPERATOR SECURITY OBLIGATIONS
+────────────────────────────────────────────────────────────
+- Set OPERATOR_SECRET to a cryptographically random
+  value of at least 32 bytes. Never use the default.
+- Set JWT_SECRET to a separate cryptographically random
+  value of at least 32 bytes.
+- Restrict .env file permissions: chmod 600 .env
+- Restrict database permissions: chmod 600 rapax.db
+- Do not expose operator API endpoints to public internet.
+- Configure blockchain providers with minimum required
+  API permissions.
+- Back up rapax.db regularly to a secure location.
+- Keep Node.js and all dependencies updated.
+- Use a reverse proxy (nginx, Caddy) with TLS in
+  production. Do not expose port 4000 directly.
+
+────────────────────────────────────────────────────────────
+6. LIMITATIONS
+────────────────────────────────────────────────────────────
+- RaPaX™ does not prevent a determined attacker with
+  physical access to your server from accessing files
+  directly from the filesystem.
+- RaPaX™ download tokens, while cryptographically strong,
+  can be shared by a buyer once received. AcerbE™
+  fingerprinting is the primary control for tracing
+  unauthorized distribution post-delivery.
+- Blockchain payment detection relies on third-party
+  provider APIs. Provider outages may delay detection.
+- RaPaX™ is not a licensed payment processor and does
+  not provide PCI-DSS compliance.
+- AcerbE™ forensic outputs are integrity artifacts, not
+  court-certified forensic evidence without independent
+  expert verification.
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────

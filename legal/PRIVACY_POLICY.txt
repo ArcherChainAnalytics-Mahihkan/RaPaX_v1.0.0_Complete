@@ -1,0 +1,132 @@
+RaPaX™ Privacy Policy
+Archer Chain Analytics™
+Mahihkan.com
+CRA BN: 754975035 | GST/HST: 754975035 RT0001
+Saskatoon, Saskatchewan, Canada
+
+────────────────────────────────────────────────────────────
+1. SCOPE
+────────────────────────────────────────────────────────────
+This policy governs data handling within RaPaX™.
+
+RaPaX™ is a self-hosted software platform.
+This policy applies to all tiers and versions of RaPaX™.
+
+────────────────────────────────────────────────────────────
+2. NO DATA COLLECTION BY ARCHER CHAIN ANALYTICS™
+────────────────────────────────────────────────────────────
+Archer Chain Analytics™ does not collect any data
+through RaPaX™.
+
+RaPaX™ does not:
+- Transmit data to Archer Chain Analytics™ or any
+  third party controlled by Archer Chain Analytics™.
+- Maintain any external database, server, or cloud service.
+- Record installation events or operational data externally.
+- Collect telemetry, analytics, or usage metrics.
+
+────────────────────────────────────────────────────────────
+3. NO TELEMETRY
+────────────────────────────────────────────────────────────
+RaPaX™ contains no telemetry.
+
+No analytics, crash reporting, feature tracking, or usage
+monitoring is implemented or transmitted.
+
+────────────────────────────────────────────────────────────
+4. NO EXTERNAL TRANSMISSION
+────────────────────────────────────────────────────────────
+RaPaX™ does not initiate outbound connections except:
+
+- To blockchain provider APIs you explicitly configure
+  (BlockCypher, Infura, Alchemy, Helius, or your node).
+- To the AcerbE™ fingerprinting service you configure.
+
+All other operations are executed locally on your system.
+All transaction data, buyer data, and audit records
+remain on your infrastructure.
+
+────────────────────────────────────────────────────────────
+5. LOCAL DATA — YOUR RESPONSIBILITY
+────────────────────────────────────────────────────────────
+RaPaX™ stores the following locally on your system:
+
+- rapax.db — SQLite database containing product catalog,
+  transaction records, payment addresses, fingerprint
+  metadata, delivery records, and audit logs.
+- storage/products/ — Uploaded product files.
+- storage/fingerprinted/ — AcerbE™-processed output files.
+- logs/ — Exported audit reports.
+- .env — Configuration including operator credentials
+  and blockchain API keys.
+
+You are solely responsible for:
+- Security of all locally stored data.
+- Encryption of the database at rest if required.
+- Compliance with PIPEDA and applicable privacy legislation
+  regarding any personal data you collect from Buyers.
+- Lawful handling of Buyer wallet addresses and identifiers.
+- Backup and recovery of all operational data.
+
+────────────────────────────────────────────────────────────
+6. BUYER DATA — OPERATOR OBLIGATION
+────────────────────────────────────────────────────────────
+If you collect Buyer information (wallet address,
+email, transaction history) through RaPaX™, you are
+the data controller.
+
+Archer Chain Analytics™ is not the data controller for
+any Buyer information you process using RaPaX™.
+
+You must:
+- Maintain a compliant privacy policy for your own Buyers.
+- Obtain lawful basis for processing Buyer personal data.
+- Respond to data subject requests from your Buyers.
+- Disclose to Buyers what data you collect and retain.
+
+────────────────────────────────────────────────────────────
+7. OPERATOR CREDENTIALS
+────────────────────────────────────────────────────────────
+RaPaX™ generates and stores:
+- Operator JWT secret (in .env)
+- Operator authentication tokens (session-based)
+- Blockchain provider API keys (in .env)
+- AcerbE™ API key (in .env)
+
+You are solely responsible for the security of these
+credentials. Archer Chain Analytics™ has no access to
+or knowledge of your credentials.
+
+────────────────────────────────────────────────────────────
+8. THIRD-PARTY BLOCKCHAIN PROVIDERS
+────────────────────────────────────────────────────────────
+RaPaX™ communicates with blockchain APIs you configure.
+
+These providers have their own privacy policies:
+- BlockCypher: blockcypher.com/privacy
+- Infura: infura.io/privacy
+- Alchemy: alchemy.com/privacy
+- Helius: helius.dev/privacy
+
+Transaction data submitted to these APIs is subject
+to their respective policies. You are responsible for
+reviewing and accepting those policies.
+
+────────────────────────────────────────────────────────────
+9. UPDATES TO THIS POLICY
+────────────────────────────────────────────────────────────
+Archer Chain Analytics™ may update this policy with
+new versions of RaPaX™. Updates will be distributed
+with the updated software package.
+
+────────────────────────────────────────────────────────────
+10. CONTACT
+────────────────────────────────────────────────────────────
+Archer Chain Analytics™
+Mahihkan.com
+Saskatoon, Saskatchewan, Canada
+
+────────────────────────────────────────────────────────────
+© Archer Chain Analytics™ — All Rights Reserved.
+Sovereign. Zero-Trust. Zero Compromise.
+────────────────────────────────────────────────────────────
