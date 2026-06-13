@@ -188,3 +188,17 @@ cloudflared tunnel run --url http://localhost:4000 rapax
 
 *© Archer Chain Analytics™ — All Rights Reserved.*
 *Sovereign. Zero-Trust. Zero Compromise.*
+
+---
+
+## Ownership & Legal
+
+**© 2026 Neil Scott Archer / Archer Chain Analytics**
+- **ISC Registration:** 102237785
+- **CRA BN:** 709110639
+- **Address:** 417 Avenue G S, 5th Ave N, Saskatoon SK S7M 1V5
+- **Contact:** archerchainanalytics@gmail.com
+
+All rights reserved. Exclusive property of Neil Scott Archer operating as Archer Chain Analytics. Unauthorized use prohibited. Trademark applications pending with CIPO.
+
+---
