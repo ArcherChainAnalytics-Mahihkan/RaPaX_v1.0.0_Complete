@@ -3,6 +3,7 @@
 //  All protected by operatorAuth except POST /operator/login
 // ─────────────────────────────────────────────────────────────────
 import { Router } from 'express';
+import crypto from 'crypto';
 import multer from 'multer';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,7 +17,6 @@ import { getDb } from '../utils/initDb.js';
 
 const router = Router();
 
-// ── File Upload (Multer) ──────────────────────────────────────────
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, config.storage.products),
   filename:    (req, file, cb) => {
@@ -25,28 +25,26 @@ const storage = multer.diskStorage({
     cb(null, `${safe}_${uuidv4()}${ext}`);
   },
 });
-const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } }); // 500 MB max
+const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } });
 
-// ── Auth ──────────────────────────────────────────────────────────
-
-// POST /operator/login
 router.post('/operator/login', async (req, res) => {
   const { secret } = req.body;
   if (!secret) return res.status(400).json({ error: 'secret required' });
 
-  const valid = secret === config.auth.operatorSecret;
+  const secretBuf   = Buffer.from(String(secret));
+  const expectedBuf = Buffer.from(String(config.auth.operatorSecret));
+  const valid =
+    secretBuf.length === expectedBuf.length &&
+    crypto.timingSafeEqual(secretBuf, expectedBuf);
+
   if (!valid) return res.status(401).json({ error: 'Invalid operator secret' });
 
   const token = generateOperatorToken();
   res.json({ success: true, token, expires_in: config.auth.jwtExpiresIn });
 });
 
-// All routes below require auth
 router.use(operatorAuth);
 
-// ── Products (full CRUD) ──────────────────────────────────────────
-
-// GET /operator/products — all products including unavailable
 router.get('/operator/products', (req, res) => {
   try {
     res.json({ success: true, products: ProductModel.listAll() });
@@ -55,7 +53,6 @@ router.get('/operator/products', (req, res) => {
   }
 });
 
-// POST /operator/products — upload file + create product
 router.post('/operator/products', upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'Product file is required' });
 
@@ -86,7 +83,6 @@ router.post('/operator/products', upload.single('file'), (req, res) => {
   }
 });
 
-// PATCH /operator/products/:id — update metadata (no file)
 router.patch('/operator/products/:id', (req, res) => {
   const product = ProductModel.findById(req.params.id);
   if (!product) return res.status(404).json({ error: 'Product not found' });
@@ -99,7 +95,6 @@ router.patch('/operator/products/:id', (req, res) => {
   }
 });
 
-// PATCH /operator/products/:id/file — replace the file only
 router.patch('/operator/products/:id/file', upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'New file is required' });
   const product = ProductModel.findById(req.params.id);
@@ -113,7 +108,6 @@ router.patch('/operator/products/:id/file', upload.single('file'), (req, res) =>
   }
 });
 
-// PATCH /operator/products/:id/toggle — toggle availability
 router.patch('/operator/products/:id/toggle', (req, res) => {
   try {
     const product = ProductModel.toggleAvailability(req.params.id);
@@ -124,7 +118,6 @@ router.patch('/operator/products/:id/toggle', (req, res) => {
   }
 });
 
-// DELETE /operator/products/:id — soft delete
 router.delete('/operator/products/:id', (req, res) => {
   const product = ProductModel.findById(req.params.id);
   if (!product) return res.status(404).json({ error: 'Product not found' });
@@ -132,21 +125,15 @@ router.delete('/operator/products/:id', (req, res) => {
   res.json({ success: true, message: 'Product deactivated' });
 });
 
-// ── Transactions ──────────────────────────────────────────────────
-
 router.get('/operator/transactions', (req, res) => {
   const limit  = parseInt(req.query.limit  || '100', 10);
   const offset = parseInt(req.query.offset || '0',   10);
   res.json({ success: true, transactions: TransactionModel.listAll({ limit, offset }) });
 });
 
-// ── Deliveries ────────────────────────────────────────────────────
-
 router.get('/operator/deliveries', (req, res) => {
   res.json({ success: true, deliveries: DeliveryModel.listAll() });
 });
-
-// ── Audit Log ─────────────────────────────────────────────────────
 
 router.get('/operator/logs', (req, res) => {
   try {
@@ -166,9 +153,6 @@ router.get('/operator/logs', (req, res) => {
   }
 });
 
-// ── Export ────────────────────────────────────────────────────────
-
-// GET /operator/export/json
 router.get('/operator/export/json', (req, res) => {
   try {
     const json = ExportService.asJson(req.query);
@@ -180,7 +164,6 @@ router.get('/operator/export/json', (req, res) => {
   }
 });
 
-// GET /operator/export/csv
 router.get('/operator/export/csv', async (req, res) => {
   try {
     const filePath = await ExportService.asCsv(req.query);
@@ -190,7 +173,6 @@ router.get('/operator/export/csv', async (req, res) => {
   }
 });
 
-// GET /operator/export/deliveries
 router.get('/operator/export/deliveries', (req, res) => {
   try {
     const log = ExportService.deliveryLog();

@@ -12,7 +12,6 @@ import { PaymentService, SUPPORTED_CURRENCIES } from '../services/paymentService
 
 const router = Router();
 
-// POST /purchase/initiate
 router.post('/purchase/initiate', async (req, res) => {
   const { product_id, currency, buyer_wallet } = req.body;
 
@@ -52,7 +51,6 @@ router.post('/purchase/initiate', async (req, res) => {
   }
 });
 
-// GET /purchase/status/:transaction_id
 router.get('/purchase/status/:transaction_id', (req, res) => {
   try {
     const tx = TransactionModel.findById(req.params.transaction_id);
@@ -78,10 +76,9 @@ router.get('/purchase/status/:transaction_id', (req, res) => {
       response.expires_at      = paymentAddr.expires_at;
     }
 
-    // Only reveal download link when delivery is ready
-    if (delivery && tx.status === 'delivering' || tx.status === 'complete') {
-      response.download_link = delivery?.download_link || null;
-      response.download_expires_at = delivery?.expires_at || null;
+    if (delivery && (tx.status === 'delivering' || tx.status === 'complete')) {
+      response.download_link = delivery.download_link || null;
+      response.download_expires_at = delivery.expires_at || null;
     }
 
     res.json(response);
